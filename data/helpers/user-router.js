@@ -4,6 +4,7 @@ const postDb = require('./postDb.js');
 
 const userRouter = express.Router();
 
+
 userRouter.get('/', (req, res) => {
     userDb
     .get()
@@ -75,11 +76,11 @@ userRouter.delete('/:id', (req, res) => {
     })
 })
 
-userRouter.put('/:id', (req, res) => {
+userRouter.put('/:id', upperCase, (req, res) => {
     const { id } = req.params;
     const { name } = req.body;
-    const newUser = req.body;
-    newUser.name = name.toUpperCase();
+   
+    
 
     userDb
     .getById(id)
@@ -118,5 +119,9 @@ userRouter.get('/:id/posts', (req, res) => {
     })
 })
 
+function upperCase(req, res, next) {
+    req.body.name = req.body.name.toUpperCase();
+    next();
+}
 
 module.exports = userRouter;
